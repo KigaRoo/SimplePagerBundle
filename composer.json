@@ -11,5 +11,6 @@
     },
     "autoload": {
         "psr-0": { "Ideato\\SimplePagerBundle": "" }
-    }
+    },
+    "target-dir": "Ideato/SimplePagerBundle"
 }

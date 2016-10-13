@@ -94,6 +94,21 @@ class Pager extends sfPager
         $q = $this->cloneQuery();
         $this->results = $q->setMaxResults($this->getMaxPerPage())->setFirstResult($this->getFirstIndice() - 1)->execute();
 
+        /*
+         * PAGER´S BUG WORKAROUND!
+         * when using query builders "orderBy" with a calculated field (::addSelect( age + 1)) the result set
+         * gets scrambled with a new array hierarchy
+         */
+        if(isset($this->results[0]) && is_array($this->results[0]) && is_object($this->results[0][0]))
+        {
+            $tmp = array();
+            foreach($this->results as $res)
+            {
+                $tmp[] = $res[0];
+            }
+            $this->results = $tmp;
+        }
+
         return $this->results;
     }
 
